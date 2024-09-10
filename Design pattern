@@ -1,0 +1,5 @@
+singelton: 
+create db instance for reading 
+create logger instance
+create 
+factory:
