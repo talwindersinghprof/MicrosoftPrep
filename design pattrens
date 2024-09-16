@@ -1,0 +1,22 @@
+Prototype creational pattren
+
+Proxy structural pattren
+If server is blocked proxy returns it 
+Used in caching 
+Pre and post processing 
+
+
+
+Flyweight strcutral pattren (reduce memory by sharing data )
+NPC's in games have same apearence 
+Common attributes of objects in amazon like type of item
+Playlists songs (no need to create obj for song every time )
+
+
+Faccade struct pattren 
+Convert video in After effect(only format is req)
+In windows setting tabs basics settings are available and if more is reuired advance tab can be clicked 
+In google results only heighlists (data tables )  of the websites  links are visible while you can also access  website directl y and see the data 
+
+
+Design parking lot 
