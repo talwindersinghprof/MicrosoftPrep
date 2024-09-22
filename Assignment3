@@ -1,0 +1,567 @@
+
+
+
+
+
+876 Middle of linked list
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) 
+    {
+        ListNode * slowPointer=head;
+        ListNode * fastPointer=head;
+        while(fastPointer && fastPointer->next)
+        {
+            fastPointer=fastPointer->next->next;
+            slowPointer=slowPointer->next;
+        }
+        return slowPointer;
+        
+    }
+};
+
+Merge sorted linked list 
+
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) 
+    {
+         ListNode* itr1=list1,*itr2=list2,*itr=new ListNode(-1);
+         ListNode* head=itr;
+         while(itr1 && itr2)
+         {
+            if(itr1->val<=itr2->val)
+            {
+                 itr->next=itr1;
+                 itr1=itr1->next;
+                 itr=itr->next;
+            }
+            else  
+            {
+                 itr->next=itr2;
+                 itr2=itr2->next;
+                 itr=itr->next;
+            }
+            
+         }
+         if(itr1)itr->next=itr1;
+         else if(itr2) itr->next=itr2;
+        return head->next;
+    }
+};
+
+
+Sort linkedlist 
+
+
+
+
+
+
+
+
+
+
+
+
+Reverse linked list 
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) 
+    {
+        ListNode* current=head,*prev=nullptr,*next=nullptr;
+        while(current)
+        {
+            next=current->next;
+            current->next=prev;
+            prev=current;
+            current=next;
+        }
+        return prev;
+        
+    }
+};
+
+Reorder list 
+
+
+class Solution {
+public:
+    ListNode* mergealternateLinkedlist(ListNode* l1,ListNode* l2 )
+    {
+        ListNode * head=l1;
+        ListNode * temp=l1;
+        l1=l1->next;
+        bool takel2=true;
+        while(l1 && l2)
+        {
+            if(takel2)
+            {
+                temp->next=l2;
+                l2=l2->next;
+                takel2=false;
+            }
+            else {
+                temp->next=l1;
+                 l1=l1->next;
+                 takel2=true;
+            }
+              temp=temp->next;
+        }
+        if(l1)temp->next=l1;
+        if(l2)temp->next=l2;
+        return head;
+    }
+    ListNode* reverseLinkedlist(ListNode* head)
+    {
+        ListNode* next=nullptr, *prev=nullptr;
+        while(head)
+        {
+            next=head->next;
+            head->next=prev;
+            prev=head;
+            head=next;
+        }
+        return prev;
+    }
+    void reorderList(ListNode* head) 
+    {   
+         ListNode * slowPointer=head;
+        ListNode * fastPointer=head;
+        ListNode * prev=nullptr;
+        while(fastPointer && fastPointer->next)
+        {
+            fastPointer=fastPointer->next->next;
+            prev=slowPointer;
+            slowPointer=slowPointer->next;
+        }
+        ListNode* list= reverseLinkedlist(slowPointer->next);
+        if(prev)slowPointer->next=nullptr;
+        head= mergealternateLinkedlist(head,list);
+    }
+};
+
+
+Convert binary linked list to  int 
+
+class Solution {
+public:
+    int getDecimalValue(ListNode* head) 
+    {
+         
+        int result=0,index=0;
+        while(head)
+        {
+             result = result * 2 + head->val;
+            head = head->next;
+        }   
+        return result;
+    }
+};
+
+
+Swap pairs 
+class Solution 
+{
+public:
+    ListNode* swapPairs(ListNode* head) 
+    {
+        if(head == NULL || head->next == NULL) return head;
+        ListNode* prev=new ListNode(-1);
+        ListNode* next,*curr=head;
+        ListNode* nextt=head->next;
+        while(curr && curr->next)
+        {
+            next = curr->next;
+            prev->next=next;
+            curr->next=next->next;
+            next->next=curr;
+            prev=curr;
+            curr=curr->next;
+             
+        }
+        return nextt;
+    }
+};
+
+
+
+Add one  
+int addWithCarry(Node *head) {
+    if (head == nullptr) {
+        return 1;
+    }   
+    int res = head->data + addWithCarry(head->next);
+    head->data = res % 10;
+    return res / 10;
+}
+
+
+class Solution {
+  public:
+    Node *addOne(Node *head) {
+    int carry = addWithCarry(head);
+    if (carry) {
+        Node *newNode = new Node(carry);
+        newNode->next = head;
+          return newNode; 
+    }
+
+    return head;
+}
+
+
+Valid Parenthesis :
+
+class Solution {
+public:
+    bool isValid(string s) 
+    {
+        stack<char>balanceStack;
+        for(int i=0;i<s.size();i++)
+        {
+        if
+            (
+                !(balanceStack.empty()) &&
+                (
+                    s[i]==')' && balanceStack.top()=='('
+                    || s[i]=='}' && balanceStack.top()=='{'
+                    || s[i]==']' && balanceStack.top()=='[' 
+                )
+            )
+            balanceStack.pop();
+        else balanceStack.push(s[i]);
+        }
+        return (balanceStack.empty());
+    }
+};
+
+sort stack
+void SortedStack :: sort()
+{
+        stack<int> t ;
+        while(!s.empty()) 
+        {
+        int item = s.top();
+        s.pop();
+        while(!t.empty() && t.top() < item)
+        {
+             s.push(t.top());
+             t.pop();
+        }
+        t.push(item);   
+        }   
+        while(!t.empty()) 
+        {
+            s.push(t.top());
+            t.pop();
+        }
+        
+}
+
+
+https://www.codechef.com/problems/INFIX 
+
+
+Minimum swaps 
+
+class Solution {
+public:
+    int minSwaps(string s) 
+    {
+        int open=0,close=0,count=0;
+        for(int i=0;i<s.size();i++)
+        {
+        if(s[i]=='[')open++;
+        else if(s[i]==']' && open>0)open--;
+        else count++;
+        }
+        return (count%2==0)?count/2:(count+1)/2;
+    }
+};
+
+
+Stock spanner 
+
+class StockSpanner {
+public:
+    StockSpanner() {
+        
+    }
+    stack<pair<int, int>> s;
+    int next(int price) {
+        int res = 1;
+        while (!s.empty() && s.top().first <= price) {
+            res += s.top().second;
+            s.pop();
+        }
+        s.push({price, res});
+        return res;
+    }
+};
+
+Reverse queue k elements 
+
+#include <bits/stdc++.h> 
+queue<int> reverseElements(queue<int> q, int k)
+{
+    vector<int>v;
+    int n=q.size();
+    for(int i=0;i<k;i++)
+    {
+        v.push_back(q.front());
+        q.pop();
+    }
+    reverse(v.begin(),v.end());
+    for(int i=0;i<n;i++)
+    {
+        if(i<k)q.push(v[i]);
+        else{
+            q.push(q.front());
+            q.pop();
+        }
+    }
+    return q;
+}
+
+
+Help link: https://www.naukri.com/code360/library/find-the-leftmost-and-rightmost-set-bit-of-a-number
+Get rightmost set bit 
+
+class Solution
+{
+    public:
+    //Function to find position of first set bit in the given number.
+    unsigned int getFirstSetBit(int n)
+    {
+        return log2(n & -n) + 1;
+    }
+};
+
+Level order triversal 
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) 
+    {
+        if(!root)return {};
+        queue<pair<TreeNode*,int>>q;
+        q.push({root,0});
+        vector<vector<int>>ans(1);
+        while(!q.empty())
+        {
+            TreeNode *temp=q.front().first;
+            int level=q.front().second;
+            q.pop();
+            if(ans.size()-1<level)ans.push_back({temp->val});
+            else ans[level].push_back(temp->val);
+            if(temp->left)q.push({temp->left,level+1});
+            if(temp->right)q.push({temp->right,level+1});
+        }
+        return ans;
+    }
+};
+
+
+Diameter of tree 
+
+class Solution {
+public:
+    int ans=0;
+    int height(TreeNode* root)
+{
+        if(!root)return 0;
+         int leftHeight=0,rightHeight=0;
+         leftHeight= height(root->left);
+         rightHeight= height(root->right);
+         ans= max(ans,leftHeight+rightHeight+1);
+         return 1+max(leftHeight,rightHeight);
+}
+    int diameterOfBinaryTree(TreeNode* root) 
+    {
+         if(!root)return 0;
+        height(root);
+        return ans-1;
+    }
+};
+
+
+
+Depth of binary tree pre order array 
+int i=0; 
+int depth2(char str[]) 
+{    if(strlen(str) <= i)return 0;
+    if(str[i] == 'l') return 1;
+     i++;    
+     int dep1 = 1 + depth2(str);         
+     i++;    
+     int dep2 = 1 + depth2(str);        
+     return max(dep1,dep2); }
+int depth(char str[])
+{    
+    return depth2(str) - 1; 
+}
+
+Swap nodes 
+
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) 
+    {
+        if(!root)return nullptr;
+        TreeNode* left=nullptr,*right=nullptr;
+        left=invertTree(root->left);
+        right=invertTree(root->right);
+        root->left=right;
+        root->right=left;
+        return root;
+    }
+};
+
+
+Boundary of tree 
+
+void leftBoundary(TreeNode<int>* root, vector<int>& ans)
+{
+    if (root == NULL || (root -> left == NULL && root -> right == NULL))
+    {
+        return;
+    }
+    ans.push_back(root -> data);
+    if (root -> left != NULL)
+    {
+        leftBoundary(root -> left, ans);
+    }
+    else
+    {
+        leftBoundary(root -> right, ans);
+    }
+}
+void rightBoundary(TreeNode<int>* root, vector<int>& ans)
+{
+    if (root == NULL || (root -> left == NULL && root -> right == NULL))
+    {
+        return;
+    }
+    if (root -> right != NULL)
+    {
+        rightBoundary(root -> right, ans);
+    }
+    else
+    {
+        rightBoundary(root -> left, ans);
+    }
+    ans.push_back(root -> data);
+}
+void leafNodes(TreeNode<int>* root, vector<int>& ans)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    if (root -> left == NULL && root -> right == NULL)
+    {
+        ans.push_back(root -> data);
+        return;
+    }
+    leafNodes(root -> left, ans);
+    leafNodes(root -> right, ans);
+}
+vector<int> traverseBoundary(TreeNode<int>* root)
+{
+    vector<int> ans;
+    if (root == NULL)
+    {
+        return ans;
+    }
+    ans.push_back(root -> data);
+    leftBoundary(root -> left, ans);
+    leafNodes(root, ans);
+    rightBoundary(root -> right, ans);
+    return ans;
+}
+
+
+Is valid bst
+
+bool isValid(TreeNode* root,long mini, long maxi) 
+    {
+        if(!root)return true;
+        if(root && (root->val<=mini || root->val>=maxi))return false;
+        bool l=isValid(root->left,mini,root->val);
+        bool r=isValid(root->right,root->val,maxi);
+        return l&r;
+    }
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) 
+    {
+            return isValid(root ,LONG_MIN,LONG_MAX);
+    }
+};
+
+
+Maximum path sum
+
+class Solution {
+public:
+    int ans=0;
+    int maxPath(TreeNode* root,int &ans) {
+        if(!root)return 0;
+        int lbt=root->val+maxPath(root->left,ans);
+        int rbt=root->val+maxPath(root->right,ans);
+        ans=max({
+            ans,
+            lbt,
+            rbt,
+            root->val,
+            lbt+rbt-root->val
+        });
+        return max({root->val,lbt,rbt});
+    }
+    int maxPathSum(TreeNode* root) {
+        if(!root)return 0;
+        int lbt=maxPath(root,ans);
+        return ans;
+    }
+};
+
+
+Vertical Order traversal of Binary Tree
+vector<vector<int> > Solution::verticalOrderTraversal(TreeNode* root) 
+{
+        if(!root)return {};
+        map < int,vector<int>>vLevelList; 
+        vector<vector<int>>ans;
+        queue<pair<TreeNode*,int>>q;
+        q.push({root,0});
+        while(!q.empty())
+        {
+            int s=q.size();
+            for(int i=0;i<s;i++){
+                TreeNode *node=q.front().first;
+                 int vlevel=q.front().second;
+                q.pop();
+                vLevelList[vlevel].push_back(node->val);
+                if(node->left!=NULL)q.push({node->left,vlevel-1});
+                if(node->right!=NULL)q.push({node->right,vlevel+1});
+            }
+        }
+        for(auto v:vLevelList)ans.push_back(v.second);
+        return ans;
+        
+}
+
+
+
