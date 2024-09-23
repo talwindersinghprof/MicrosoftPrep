@@ -1,0 +1,291 @@
+---chain of responsibility 
+class Handler 
+{
+	Handler *next;
+	String intructions; 
+	void setNext(Handler *h);
+}
+class dialogbox public:Handler
+{
+	void setNext(Handler *h)
+	{
+		next=dialogbox;
+	}
+	intructions="indiagbox";
+}
+class click public:Handler
+{
+	intructions="click";
+	void setNext(Handler *h)
+	{
+		next=dialogbox;
+	}
+}
+examples: user authentication, proxy levels,amazon checkout steps 
+---
+
+
+Command:
+class commads
+{
+	map<string,pair<string,string>>command_apis;  //command-><API, arguments>
+	m["open"]="openApp";
+	m["pay"]="proceedToPayScreen";
+	m["checkout"]="proceedTocheckoutScreen";
+	m["cancel"]="cancelOrder";
+}
+api openApp();
+api proceedToPayScreen() ........
+
+
+examples:  
+Game Controls :W A S D
+remote controls 
+commands given to robots 
+
+
+
+-----iterator---
+
+
+ecxamples :iterators in java and c++ templates 
+
+instagram friend list iterator
+
+template<TYpename t>
+class iterator
+{
+	bool hasNext();
+	t next();
+};
+class IterateRestaurants
+{
+	static number_of_restaurants;
+	static curr_rest;
+	vector<restaurants>v;
+	bool hasNext()
+	{
+		return(curr_rest<number_of_restaurants);
+	}
+	t next()
+	{
+		return v[++curr];
+	}
+	
+};
+
+
+-----------------Mediator -----------------------
+
+
+class Mediator
+{
+	void notify();
+};
+class ConcreteMediator
+{
+   Component1 *component1_;
+  Component2 *component2_;
+  
+
+ public:
+  ConcreteMediator(Component1 *c1, Component2 *c2) : component1_(c1), component2_(c2) {
+    this->component1_->set_mediator(this);
+    this->component2_->set_mediator(this);
+  }
+  void Notify(BaseComponent *sender, std::string event) const override {
+    if (event == "A") {
+      std::cout << "Mediator reacts on A and triggers following operations:\n";
+      this->component2_->DoC();
+    }
+    if (event == "D") {
+      std::cout << "Mediator reacts on D and triggers following operations:\n";
+      this->component1_->DoB();
+      this->component2_->DoC();
+    }
+  }
+};
+
+text viewad  on howering over a button : checks  which dialug box it is and present text from concrete class 
+Chat Applications: Chat rooms act as mediators. 
+Distributed Systems:  routers act as mediators 
+Air Traffic Control:
+
+
+
+---------------Momento-----------------
+class Momento
+{
+	string text;
+	int size;
+	string position;
+	MOomento(text,size,position)  //constructor 
+}
+class TxtEditor
+{
+	Momento* createMomento()
+	{
+		return new Momento(text,size,position);
+	}
+}
+class caretaker
+{
+	vector<Momento>history;
+};
+eg:
+system restore windows 
+undo in word processing softwares
+save game state in video games 
+ 
+
+
+
+
+
+-------------observer design patteren -----
+class observeable
+{
+	observerlist list;
+	addobserver();
+	removeobserver();
+	 notify();
+	 
+	 // all functions need to implement in concerete observer eg : iphone sale observable 
+	
+};
+class observer
+{
+	notify();
+};
+class conreteobserver
+{
+	 conreteobserver(concrete observer)
+	 {
+		 
+	 }
+	notify()
+	{
+		notify all ;
+	}
+};
+
+
+notify me in amazon 
+weather station 
+fire alarms 
+
+
+--------------------state -----------------
+
+ 
+class State 
+{
+	void backbutton();
+	void volUPbutton();
+	void Voldownbutton();
+ 
+};
+class cameraState
+{
+	 void backbutton()//perfrom back
+	void volUPbutton(); // click
+	void Voldownbutton();  //click 
+};
+
+eg 
+game states , casino button behaves differently
+phone button behave diff based on state 
+customer query ticket state in amazon 
+
+
+
+_-------------stratergy -------------
+
+ 
+class payment  
+{
+	void fetchSenderDetails ();
+	void fetchrecieverDetails();
+	void process();
+ 
+};
+class Paypal: payment
+{
+	 void backbutton()//perfrom back
+	void volUPbutton(); // click
+	void Voldownbutton();  //click 
+};
+
+
+eg 
+each type payment handle in diff calss 
+booking of cabs : type of vehicle 
+google photos : search text photos 
+
+
+----------template method---------------
+
+ class baseGAmeLoder
+ {
+	void run ()
+	{
+		viewScreen();
+		downloadData();
+		logs()
+	}
+	 
+ };
+class templateGameLoding  
+{
+	void viewScreen();
+	void downloadData();
+	void logs()
+	{
+		stringd,aslsdfnsndfds//implemnted 
+	}
+	void restoreGame();
+ 
+};
+class Callofduty: templateGameLoding,baseGAmeLoder
+{
+	 	void viewScreen()
+		{
+			callOFuty.png 
+		}
+	void downloadData()
+	{
+		www.callofduty.com
+	}
+};
+
+eg: 
+game loding steps 
+casino games basic skeleton some methods concerete method behaves differently
+boarding of employees in company have same steps but traning is personalized 
+
+
+
+------------visitor----------------------
+
+ class iinsauranceMailvisitor
+ {
+	 
+		void sendMails()
+		{
+			for(client:clients)
+			{
+				client.acceptVisitor();
+			}
+		}
+	 
+	 
+ };
+class Bank :client   
+{
+	acceptVisitor()
+	{
+		string :"cheque  notification ";
+	}
+ 
+};
+
