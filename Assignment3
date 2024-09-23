@@ -563,5 +563,409 @@ vector<vector<int> > Solution::verticalOrderTraversal(TreeNode* root)
         
 }
 
+Flat binary tree
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        if( root )
+        {
+            TreeNode* temp=root->right;
+            root->right = root->left;
+            root->left = nullptr;
+            TreeNode* node = root;
+            while( node->right )
+            {
+                node = node->right;
+            }
+            node->right = temp;
+            flatten( root->right); 
+        } 
+        return;
+               
+    }
+};
 
+
+Flat inorder 
+
+
+void inorderTraversal(TreeNode<int> *root, vector<TreeNode<int>*> &v){
+    if(root == NULL){
+        return;
+    }
+ 
+    if(root -> left!= NULL){
+        inorderTraversal(root -> left,v);
+    }
+    v.push_back(root);
+ 
+    if(root -> right !=NULL){
+        inorderTraversal(root -> right,v);
+    }
+}
+TreeNode<int>* flatten(TreeNode<int>* root)
+{
+    vector<TreeNode<int>*> v;
+    inorderTraversal(root, v);
+    TreeNode<int>* head = v[0];
+    for(int i=0; i< v.size()-1; i++){
+        v[i] -> left = NULL;
+        v[i] -> right = v[i+1];
+    }
+    v[v.size()-1] -> left = NULL;
+    v[v.size()-1] -> right = NULL;
+    return head;
+}
+
+Merge sort :
+
+
+ class Solution {
+public:
+ListNode* middleNode(ListNode* head) 
+    {
+        ListNode * slowPointer=head;
+        ListNode * fastPointer=head;
+        ListNode *prev=slowPointer;
+        while(fastPointer && fastPointer->next)
+        {
+            fastPointer=fastPointer->next->next;
+            prev=slowPointer;
+            slowPointer=slowPointer->next;
+        }
+        prev->next=nullptr;
+        return slowPointer;
+        
+    }
+  ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) 
+    {
+         ListNode* itr1=list1,*itr2=list2,*itr=new ListNode(-1);
+         ListNode* head=itr;
+         while(itr1 && itr2)
+         {
+            if(itr1->val<=itr2->val)
+            {
+                 itr->next=itr1;
+                 itr1=itr1->next;
+                 itr=itr->next;
+            }
+            else  
+            {
+                 itr->next=itr2;
+                 itr2=itr2->next;
+                 itr=itr->next;
+            }
+            
+         }
+         if(itr1)itr->next=itr1;
+         else if(itr2) itr->next=itr2;
+          itr=head;
+          head=head->next;
+         delete itr;
+         return head;
+    }
+    ListNode* sort(ListNode* l1)
+    {
+        if(l1==nullptr)return nullptr;
+        if(l1->next==nullptr )return l1; 
+        ListNode*l2= middleNode(l1);
+        l1=sort(l1);
+        l2=sort(l2);
+        return  mergeTwoLists(l1,l2); 
+    } 
+    ListNode* sortList(ListNode* head) 
+    {
+        if(!head)return head;
+        return sort(head);
+    }
+};
+
+
+Insertion sort 
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        ListNode* dummy = new ListNode(0);
+        dummy -> next = head;
+        ListNode *pre = dummy, *cur = head;
+        while (cur) {
+            if ((cur -> next) && (cur -> next -> val < cur -> val)) {
+                while ((pre -> next) && (pre -> next -> val < cur -> next -> val)) {
+                    pre = pre -> next;
+                }
+                ListNode* temp = pre -> next;
+                pre -> next = cur -> next;
+                cur -> next = cur -> next -> next;
+                pre -> next -> next = temp;
+                pre = dummy;
+            }
+            else {
+                cur = cur -> next;
+            }
+        }
+        return dummy -> next;
+    }
+};
+
+
+Great war :
+Question is wromg no answer from others os correct 
+#include <bits/stdc++.h>
+using namespace std;
+int main() 
+{
+    int n=0,commands=0,command,Soldier;
+    cin>>n;
+    //vector<Soldier*>arr(n);
+    unordered_map<int,set<int>>juniors;
+    vector<bool>awake(n,false);
+    for(int i=0;i<n;i++)
+    {
+        int superior;
+        cin>>superior;
+        juniors[superior].insert(i);
+        juniors[superior].insert(juniors[i].begin(), juniors[i].end());
+        
+    }
+ 
+    cin>>commands;
+    for(int i=0;i<commands;i++)
+    {
+       
+        cin>>command>>Soldier;
+        switch(command)
+        {
+            case 1:
+            {
+                
+                for(auto s:juniors[Soldier])
+                    {
+                        
+                        awake[s]=true;
+                    }
+                break;
+            }
+            case 2:
+             {
+                 
+                for(auto s:juniors[Soldier])
+                {
+                     awake[s]=1;
+                    // cout<<s<<" junior of "<<Soldier<<"is slept "<<endl;
+                }
+                break;
+            }
+            case 3:
+            {
+                for(auto s:juniors[Soldier])
+                {
+                    
+                    //cout<<s<<" junior of "<<Soldier<<"isssss "<<awake[s]<<endl;
+                    if(awake[s]==true)
+                    {
+                        // cout<<"here"<<endl;
+                        cout<<s<<endl;
+                    }
+                }
+                break;
+            }
+            
+            
+        }
+         
+    }
+    
+}
+
+Bouble sort
+
+class Solution {
+public:
+int getLength(ListNode *head) {
+    int len = 0;
+    ListNode *curr = head;
+    while (curr != nullptr) {
+        len++;
+        curr = curr->next;
+    }
+    return len;
+}
+    ListNode* sortList(ListNode* head) 
+    {
+            ListNode *currNode = head;
+     int len = getLength(head);
+    int itr = 0;
+    bool swapped;
+    while (itr<len) {
+        ListNode *traverseNode = head;
+        ListNode *prevNode = head;
+        while (traverseNode->next) 
+        {
+            ListNode *ptr = traverseNode->next;
+            if (traverseNode->val > ptr->val) 
+            {
+                 swapped = true;
+                if (traverseNode == head) {
+                    traverseNode->next = ptr->next;
+                    ptr->next = traverseNode;
+                    prevNode = ptr;
+                    head = prevNode;
+                    traverseNode=prevNode;
+                }
+                else {
+                    traverseNode->next = ptr->next;
+                    ptr->next = traverseNode;
+                    prevNode->next = ptr;
+                    prevNode = ptr;
+                }
+                continue;
+            }
+            prevNode = traverseNode;
+            traverseNode = traverseNode->next;
+        } 
+        if (!swapped) {
+            break;
+        }
+        itr++;
+    } 
+    return head;
+}
+};
+
+Infix to postfix
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+class Solution {
+  public:
+    bool isOperator(char c){
+    if(c=='+'||c=='-'||c=='*'||c=='/'||c=='^'){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+int precedence(char c){
+    if(c=='^')return 3;
+    else if(c=='*' ||c=='/')return 2;
+    else if(c=='+' || c=='-')return 1;
+    else return -1; 
+}
+
+string infixToPostfix(string infix){
+stack<char>s;
+    string postfix="";
+    int l=infix.length();
+
+    for(int i=0;i<l;i++){
+        if( ( infix[i]>='a' && infix[i]<='z' ) ||
+         ( infix[i]>='A' && infix[i]<='Z' || 
+         infix[i]>='0' && infix[i]<='9'
+         ) ){
+            postfix+=infix[i];
+        }
+
+        else if(infix[i]=='('){
+            s.push(infix[i]);
+        }
+
+        else if(infix[i]==')'){
+            while( (!s.empty()) && (s.top()!='(' )   ){
+                char temp=s.top();
+                postfix+=temp;
+                s.pop();
+                
+            }
+            if(s.top()=='('){
+                s.pop();
+            }
+        }
+        else if( isOperator(infix[i]) ){
+            if(s.empty()){
+                s.push(infix[i]);
+            }
+            else{
+                if( precedence(infix[i])>precedence(s.top()) ){
+                    s.push(infix[i]);
+                }
+             
+                else{
+                    while( (!s.empty()) && ( precedence(infix[i])<=precedence(s.top()) ) ){
+                        char t=s.top();
+                        postfix+=t;
+                        s.pop();
+                    }
+                    s.push(infix[i]);
+                    
+                }
+            }
+        }
+
+
+    }
+
+    while(!s.empty()){
+         
+        postfix+=s.top();
+        s.pop();
+    }
+
+    return postfix;
+}
+
+
+};
+
+
+//{ Driver Code Starts.
+// Driver program to test above functions
+int main() {
+    int t;
+    cin >> t;
+    cin.ignore(INT_MAX, '\n');
+    while (t--) {
+        string exp;
+        cin >> exp;
+        Solution ob;
+        cout << ob.infixToPostfix(exp) << endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+
+
+
+
+
+
+
+
+
+
+void moveToEnd(Node* head, int key)
+{
+	Node* dummy =newNode(-1);
+	Node* dummy2 =newNode(-1);
+	NOde *temp=dummy2;
+	dummy->next=head;
+   Node* curr=head,prev=dummy;
+   while(curr)
+   {
+	   if(curr->data ==key)
+	   {
+		   prev->mext=curr->next;
+		   temp->next=curr;
+		   curr->next=nullptr;
+			temp=temp->next;
+		   
+	   }
+   }
+   prev->next=dummy2;
+ }
+return dummy->next;
 
